@@ -1,12 +1,10 @@
 import {
     LOADING_DATA,
     LOADING_UI,
-    SET_ERRORS,
-    CLEAR_ERRORS,
     SET_ITEMS,
     CREATE_ITEM,
-    DELETE_ITEM,
-    SET_ITEM
+    CLEAR_ERRORS,
+    SET_ERRORS,
 } from '../types';
 
 import axios from 'axios';
@@ -24,9 +22,33 @@ export const getItems = () => (dispatch) => {
                 type: SET_ITEMS,
                 payload: res.data
             }
-        );
-    })
-    .catch(err => {
-        console.log(err);
-    });
+            );
+        })
+        .catch(err => {
+            console.log(err);
+        });
 }
+
+export const createItem = (item) => (dispatch) => {
+    dispatch({
+        type: LOADING_UI
+    });
+    axios
+        .post('/item', item)
+        .then(res => {
+            dispatch({
+                type: CREATE_ITEM,
+                payload: res.data
+            });
+            dispatch(clearErrors());
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.data
+            })
+        })
+}
+export const clearErrors = () => (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
+};

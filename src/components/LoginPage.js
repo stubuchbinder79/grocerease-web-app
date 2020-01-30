@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 // Redux
@@ -9,13 +9,12 @@ import { loginUser } from '../redux/actions/userActions';
 
 // Mui
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import withStyles from '@material-ui/styles/withStyles';
 
-const styles = (theme) =>({
+const styles = (theme) => ({
     ...theme.root,
 });
 
@@ -27,7 +26,7 @@ export class LoginPage extends Component {
             email: '',
             password: '',
             loading: false,
-            errors:{}
+
         };
     };
 
@@ -49,63 +48,55 @@ export class LoginPage extends Component {
         this.props.loginUser(userData, this.props.history);
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-        // if(nextProps.UI.errors) {
-        //     this.setState({
-        //         errors: nextProps.UI.errors
-        //     });
-        // }
-    }
-
     render() {
 
         const {
             classes,
         } = this.props;
 
-        const {errors, loading} = this.state;
+        const { loading } = this.state;
 
         return (
             <Grid container className={classes.form}>
                 <Grid item sm />
                 <Grid item sm>
                     <img src="icon.png" alt="icon" className={classes.image} />
-                   
-                    <TextField 
+
+                    <TextField
                         id='email'
                         name='email'
                         label='email'
-                        helperText={errors.email}
-                        error = {errors.email ? true : false}
+                        // helperText={errors.email}
+                        // error={errors.email ? true : false}
                         value={this.state.email}
                         className={classes.textField}
                         onChange={this.handleChange}
                         fullWidth />
 
-                    <TextField 
+                    <TextField
                         id='password'
                         name='password'
                         label='password'
-                        helperText={errors.password}
-                        error = {errors.password ? true : false}
+                        // helperText={errors.password}
+                        // error={errors.password ? true : false}
                         value={this.state.password}
                         className={classes.textField}
                         onChange={this.handleChange}
                         fullWidth />
-                   
-                   
+
+
                     <Button
                         type='submit'
                         variant='contained'
                         color='primary'
                         className={classes.button}
                         onClick={this.handleSubmit}>
-                        Login 
+                        Login
                        {loading && (
                             <CircularProgress size={30} className={classes.progress} />
-                       )}
+                        )}
                     </Button>
-                        <br />
+                    <br />
                     <small>don't have an account? sign up <Link to="/signup">here</Link></small>
                 </Grid>
                 <Grid item sm />
@@ -118,7 +109,7 @@ LoginPage.propTypes = {
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    errors: PropTypes.array.isRequired,
+    // errors: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

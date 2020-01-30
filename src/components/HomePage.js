@@ -2,48 +2,28 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ItemList from './ItemList';
 
-// Mui
-import Grid from '@material-ui/core/Grid';
-
 // Redux
 import { connect } from 'react-redux';
 import { getItems } from '../redux/actions/dataActions';
-
-const styles = {
-    container: {
-        width: '100%'
-    },
-    grid: {
-        flexGrow: 1,
-        margin: 'auto 20px auto 20px'
-    }
-};
 
 class HomePage extends Component {
     componentDidMount() {
         this.props.getItems();
     }
-    render () {
+    render() {
 
         const {
-            items,
-            loading
-        } = this.props.data;
+            data: { items },
+            UI: { loading }
+        } = this.props;
 
         let itemsMarkup = !loading ?
-        <ItemList items={items} />
-             : <p>Loading...</p>
+            <ItemList items={items} key="itemList" />
+            : <p>Loading...</p>
         return (
-           <Fragment>
-               <h2>My Items</h2>
-               <button 
-                    style={{ marginBottom: 20 }}
-                    className="btn btn-primary add-item"
-                    >
-                        Add Item
-                    </button>
-                    {/* <ItemList items={this.props.items} /> */}
-           </Fragment>
+            <Fragment>
+                {itemsMarkup}
+            </Fragment>
         )
     }
 }
@@ -51,10 +31,12 @@ class HomePage extends Component {
 HomePage.propTypes = {
     getItems: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
+    UI: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-    data: state.data
+    data: state.data,
+    UI: state.UI
 });
 
-export default connect(mapStateToProps, {getItems})(HomePage);
+export default connect(mapStateToProps, { getItems })(HomePage);
