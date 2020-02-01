@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,30 +15,27 @@ class NavBar extends Component {
         const { authenticated } = this.props;
 
         const logout = () => {
-            console.log('logout user');
-            logoutUser();
-
+            this.props.logoutUser()
+            window.location = "/login"
         }
-
         return (
-            <AppBar>
-
-                <Toolbar className="nav-container">
-                    {
-                        authenticated ? (
-                            <>
+            <>
+                <AppBar>
+                    <Toolbar className="nav-container">
+                        {
+                            authenticated ? (
                                 <NewItemForm />
-                            </>
-                        ) : (
-                                <Button color="inherit" component={Link} to="/login">Login</Button>
-                            )
-                    }
-                    GrocerEase
+                            ) : (
+                                    < Button color="inherit" component={Link} to="/login">Login</Button>
+                                )
+                        }
+                        GrocerEase
                     {authenticated ? (
-                        <Button color="inherit" onClick={logout}>Logout</Button>
-                    ) : <p>login</p>}
-                </Toolbar>
-            </AppBar>
+                            <Button color="inherit" onClick={logout}>Logout</Button>
+                        ) : <></>}
+                    </Toolbar>
+                </AppBar >
+            </>
         )
     }
 }

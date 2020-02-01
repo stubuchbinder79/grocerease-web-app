@@ -1,10 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import ItemList from './ItemList';
+import Item from './Item';
+
+// Mui
+import Grid from '@material-ui/core/Grid';
 
 // Redux
 import { connect } from 'react-redux';
 import { getItems } from '../redux/actions/dataActions';
+
+const styles = {
+    container: {
+        width: '100%'
+    }
+};
+
 
 class HomePage extends Component {
     componentDidMount() {
@@ -12,18 +22,17 @@ class HomePage extends Component {
     }
     render() {
 
-        const {
-            data: { items },
-            UI: { loading }
-        } = this.props;
+        const { items, loading } = this.props.data;
 
-        let itemsMarkup = !loading ?
-            <ItemList items={items} key="itemList" />
+        let recentItemsMarkup = !loading && items !== null ?
+            items.map((item) =>
+                <Item key={item.title} item={item} />
+            )
             : <p>Loading...</p>
         return (
-            <Fragment>
-                {itemsMarkup}
-            </Fragment>
+            <div style={styles.container}>
+                {recentItemsMarkup}
+            </div>
         )
     }
 }
@@ -31,12 +40,10 @@ class HomePage extends Component {
 HomePage.propTypes = {
     getItems: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-    UI: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-    data: state.data,
-    UI: state.UI
+    data: state.data
 });
 
 export default connect(mapStateToProps, { getItems })(HomePage);

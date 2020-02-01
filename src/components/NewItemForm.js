@@ -82,9 +82,8 @@ class NewItemForm extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        this.props.createItem({
-            title: this.state.title
-        });
+        let title = this.state.title;
+        this.props.createItem({ title });
     };
 
     render() {

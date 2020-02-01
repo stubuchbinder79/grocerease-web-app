@@ -3,6 +3,8 @@ import {
     LOADING_UI,
     SET_ITEMS,
     CREATE_ITEM,
+    ACTIVATE_ITEM,
+    DEACTIVATE_ITEM,
     CLEAR_ERRORS,
     SET_ERRORS,
 } from '../types';
@@ -30,11 +32,12 @@ export const getItems = () => (dispatch) => {
 }
 
 export const createItem = (item) => (dispatch) => {
+    console.log(`dataActions.createItem: ${item.title}`);
     dispatch({
         type: LOADING_UI
     });
     axios
-        .post('/item', item)
+        .post('/item', { title: String(item.title) })
         .then(res => {
             dispatch({
                 type: CREATE_ITEM,
@@ -48,6 +51,52 @@ export const createItem = (item) => (dispatch) => {
                 payload: err.data
             })
         })
+}
+
+export const setItemActive = ({ itemId }) => (dispatch) => {
+    dispatch({
+        type: LOADING_DATA,
+    })
+    axios
+        .get(`/item/${itemId}/activate`)
+        .then(res => {
+            console.log(res.data);
+            dispatch({
+                type: ACTIVATE_ITEM,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.error(err);
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.data
+            })
+        });
+}
+
+export const setItemInactive = ({ itemId }) => (dispatch) => {
+
+    console.log('setItemInactive');
+    dispatch({
+        type: LOADING_DATA,
+    })
+    axios
+        .get(`/item/${itemId}/deactivate`)
+        .then(res => {
+            console.log(res.data);
+            dispatch({
+                type: DEACTIVATE_ITEM,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.error(err);
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.data
+            })
+        });
 }
 export const clearErrors = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });

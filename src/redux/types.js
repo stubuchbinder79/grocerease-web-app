@@ -9,8 +9,8 @@ export const LOADING_DATA = "LOADING_DATA";
 export const SET_ITEMS = "SET_ITEMS";
 export const CREATE_ITEM = "CREATE_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
-export const ITEM_ACTIVE = "ITEM_ACTIVE";
-export const ITEM_INACTIVE = "ITEM_INACTIVE";
+export const ACTIVATE_ITEM = "ITEM_ACTIVE";
+export const DEACTIVATE_ITEM = "DEACTIVATE_ITEM";
 
 // UI reducers
 export const LOADING_UI = "LOADING_UI";
