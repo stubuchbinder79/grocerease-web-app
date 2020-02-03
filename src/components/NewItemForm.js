@@ -84,6 +84,7 @@ class NewItemForm extends Component {
         event.preventDefault();
         let title = this.state.title;
         this.props.createItem({ title });
+        this.handleClose();
     };
 
     render() {

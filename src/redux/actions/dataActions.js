@@ -39,9 +39,10 @@ export const createItem = (item) => (dispatch) => {
     axios
         .post('/item', { title: String(item.title) })
         .then(res => {
+         
             dispatch({
                 type: CREATE_ITEM,
-                payload: res.data
+                payload: res.data()
             });
             dispatch(clearErrors());
         })
@@ -53,7 +54,8 @@ export const createItem = (item) => (dispatch) => {
         })
 }
 
-export const setItemActive = ({ itemId }) => (dispatch) => {
+export const setItemActive = ( itemId ) => (dispatch) => {
+    console.log(`dataActions.setItemActive: ${itemId}`);
     dispatch({
         type: LOADING_DATA,
     })
@@ -75,9 +77,8 @@ export const setItemActive = ({ itemId }) => (dispatch) => {
         });
 }
 
-export const setItemInactive = ({ itemId }) => (dispatch) => {
-
-    console.log('setItemInactive');
+export const setItemInactive = ( itemId ) => (dispatch) => {
+    console.log(`dataActions.setItemInactive: ${itemId}`);
     dispatch({
         type: LOADING_DATA,
     })
